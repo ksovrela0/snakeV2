@@ -67,6 +67,9 @@ function drawGame(){
             y: Math.floor(Math.random() * 25 + 1) * box,
         };
     }
+    else if(snakeX < 0 || snakeY < 0 || snakeY >= canvas.height || snakeX >= canvas.width){
+        location.reload();
+    }
     else{
         snake.pop();
     }
@@ -84,6 +87,7 @@ function drawGame(){
     };
 
     snake.unshift(newHead);
+    
 }
 
-let game = setInterval(drawGame,50);
+let game = setInterval(drawGame,60);
