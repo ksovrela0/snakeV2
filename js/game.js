@@ -9,6 +9,7 @@ snake[0] = {
     x: 13 * box,
     y: 12 * box
 };
+
 let food = {
     x: Math.floor(Math.random() * 26 + 1) * box,
     y: Math.floor(Math.random() * 25 + 1) * box,
@@ -30,10 +31,16 @@ function direction(event){
     }
 }
 function drawGame(){
-    ctx.clearRect(0, 0, 520, 520); 
+    ctx.clearRect(0, 0, 1000, 1000); 
     for(let i = 0; i < snake.length;i++){
         if(i == 0){
             ctx.fillStyle = "green";
+        }
+        else if(i >= 10 && i < 20){
+            ctx.fillStyle = "blue";
+        }
+        else if(i >= 20){
+            ctx.fillStyle = "black";
         }
         else{
             ctx.fillStyle = "red";
@@ -54,8 +61,22 @@ function drawGame(){
             y: Math.floor(Math.random() * 25 + 1) * box,
         };
     }
-    else if(snakeX < 0 || snakeY < 0 || snakeY >= canvas.height || snakeX >= canvas.width){
-        location.reload();
+    else if(snakeX < 0){
+        snakeX = canvas.width;
+        snake.pop();
+    }
+    else if(snakeY < 0){
+        snakeY = canvas.height;
+        snake.pop();
+    }
+    else if(snakeY >= canvas.height){
+        snakeY = 0;
+        
+        snake.pop();
+    }
+    else if(snakeX >= canvas.width){
+        snakeX = 0;
+        snake.pop();
     }
     else{
         snake.pop();
@@ -64,10 +85,20 @@ function drawGame(){
     if(dir == 'right') snakeX += box;
     if(dir == 'up') snakeY -= box;
     if(dir == 'down') snakeY += box;
+    checkTailEat(snakeX,snakeY)
     let newHead = {
         x: snakeX,
         y: snakeY
     }
     snake.unshift(newHead);
 }
-let game = setInterval(drawGame,60);
+
+function checkTailEat(sX,sY){
+    for(var j = 0; j < snake.length;j++){
+        if(sX == snake[j].x && sY == snake[j].y){
+            snake.length = j;
+            score = j;
+        }
+    }
+}
+let game = setInterval(drawGame,30);
