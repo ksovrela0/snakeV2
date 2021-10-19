@@ -1,12 +1,36 @@
 let canvas = document.getElementById("game");
 let ctx = canvas.getContext("2d");
 let box = 20;
-let score = 0;
+let score = 2;
 let foodImg = new Image();
 foodImg.src= "img/food.png";
 let snake = [];
 snake[0] = {
     x: 13 * box,
+    y: 12 * box
+};
+snake[1] = {
+    x: 14 * box,
+    y: 12 * box
+};
+snake[2] = {
+    x: 15 * box,
+    y: 12 * box
+};
+snake[3] = {
+    x: 16 * box,
+    y: 12 * box
+};
+snake[4] = {
+    x: 17 * box,
+    y: 12 * box
+};
+snake[5] = {
+    x: 18 * box,
+    y: 12 * box
+};
+snake[6] = {
+    x: 19 * box,
     y: 12 * box
 };
 
@@ -81,11 +105,16 @@ function drawGame(){
     else{
         snake.pop();
     }
+
+    console.log('sada: '+dir)
     if(dir == 'left') snakeX -= box;
     if(dir == 'right') snakeX += box;
     if(dir == 'up') snakeY -= box;
     if(dir == 'down') snakeY += box;
-    checkTailEat(snakeX,snakeY)
+    if(typeof dir != 'undefined'){
+        checkTailEat(snakeX,snakeY)
+    }
+    
     let newHead = {
         x: snakeX,
         y: snakeY
@@ -101,4 +130,4 @@ function checkTailEat(sX,sY){
         }
     }
 }
-let game = setInterval(drawGame,30);
+let game = setInterval(drawGame,40);
